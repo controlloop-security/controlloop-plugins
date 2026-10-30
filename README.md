@@ -51,6 +51,19 @@ Then ask "what does this change let my agents do?", or run
 `/controlloop:review` (optionally with a directory and
 `--default-branch <name>`).
 
+### Codex
+
+```bash
+codex plugin marketplace add controlloop-security/controlloop-plugins
+codex plugin add controlloop@controlloop
+```
+
+Or run `/plugins` in Codex and pick ControlLoop from the `controlloop`
+marketplace. Start a new session, then ask "what does this branch let my
+agents do?" or mention `$controlloop`. The review covers Codex's own
+`.codex/config.toml` (`approval_policy`, `sandbox_mode`, MCP servers) as
+well as every other host's files.
+
 Plugins for the other hosts are added here as they are released.
 
 ## License

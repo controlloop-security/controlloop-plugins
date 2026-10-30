@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "controlloop",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Review what a change lets your AI agents do. Runs the open-source ControlLoop CLI locally against the default branch and explains its verdict, the authority each change grants, and each finding with its documentation link. Read-only; no hooks.",
   "author": {
     "name": "ControlLoop",

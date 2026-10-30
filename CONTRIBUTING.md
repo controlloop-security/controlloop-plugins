@@ -22,6 +22,9 @@ repository only tells an agent how to run it and read its output.
 - **Plain descriptions.** Manifest descriptions say what the plugin does, in
   the CLI's own terms. Directories reject marketing copy.
 
+`python3 scripts/validate.py` checks these rules and the manifests, and runs
+on every pull request.
+
 ## Sign off your commits
 
 ControlLoop uses the [Developer Certificate of Origin](https://developercertificate.org)

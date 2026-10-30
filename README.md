@@ -27,7 +27,31 @@ agent to:
 4. draft `controlloop.yaml` approvals, tool declarations or ceilings only
    when asked, and leave applying them to you.
 
-Plugins for each host are added here as they are released.
+## Install
+
+Every plugin runs the `controlloop` CLI you already have, or `uvx controlloop`
+after asking you. Install the CLI with
+`brew install controlloop-security/controlloop/controlloop`,
+`uv tool install controlloop`, or `pipx install controlloop`.
+
+### Claude Code
+
+```text
+/plugin install controlloop --marketplace controlloop-security/controlloop-plugins
+```
+
+On Claude Code older than 2.1.275, add the marketplace first:
+
+```text
+/plugin marketplace add controlloop-security/controlloop-plugins
+/plugin install controlloop@controlloop
+```
+
+Then ask "what does this change let my agents do?", or run
+`/controlloop:review` (optionally with a directory and
+`--default-branch <name>`).
+
+Plugins for the other hosts are added here as they are released.
 
 ## License
 

@@ -87,7 +87,25 @@ Marketplace. To try it locally, copy the repository to
 Then ask the agent "what does this branch let my agents do?" The review
 covers Cursor's own `.cursor/mcp.json` and hooks.
 
-Plugins for the other hosts are added here as they are released.
+### GitHub Copilot (Copilot CLI and VS Code)
+
+```bash
+copilot plugin marketplace add controlloop-security/controlloop-plugins
+copilot plugin install controlloop@controlloop
+```
+
+Copilot CLI reads the same marketplace as Claude Code and the root
+`plugin.json`. In VS Code, run **Chat: Install Plugin from Source** and
+enter `controlloop-security/controlloop-plugins`. Then ask Copilot "what
+does this branch let my agents do?"
+
+## Any other MCP host
+
+`controlloop mcp` (CLI 0.7 and later) serves the same review as read-only
+tools to Kiro, Windsurf, Roo Code, Cline, Continue, opencode and any other
+MCP host. See the CLI's
+[local MCP server](https://github.com/controlloop-security/controlloop/blob/main/docs/reference/mcp-server.md)
+page.
 
 ## License
 

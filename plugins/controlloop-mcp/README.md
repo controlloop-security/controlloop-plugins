@@ -10,7 +10,7 @@ nothing. Install this one only if you want the tools, and disable it when
 you don't.
 
 - Needs a `controlloop` on your `PATH` that has the `mcp` command (the CLI
-  release after 0.6.1). Check with `controlloop mcp --help`.
+  release after 0.6.2). Check with `controlloop mcp --help`.
 - The server is read-only and local: no network (Team is switched off for
   every call), no file written in your repository, and no path outside the
   project. See the CLI's

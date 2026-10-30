@@ -101,7 +101,7 @@ does this branch let my agents do?"
 
 ## Any other MCP host
 
-`controlloop mcp` (in the CLI release after 0.6.1) serves the same review as read-only
+`controlloop mcp` (in the CLI release after 0.6.2) serves the same review as read-only
 tools to Kiro, Windsurf, Roo Code, Cline, Continue, opencode and any other
 MCP host. See the CLI's
 [local MCP server](https://github.com/controlloop-security/controlloop/blob/main/docs/reference/mcp-server.md)

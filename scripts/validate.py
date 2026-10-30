@@ -40,6 +40,16 @@ JSON_MANIFESTS = {
     "gemini-extension.json": ("name", "version"),
 }
 
+#: Agent Plugins 1.0 (agent-plugins.org/schemas/1.0.0/plugin.schema.json):
+#: the root manifest Codex, Cursor, Copilot CLI and VS Code read. Its
+#: top level is closed.
+AGENT_PLUGINS_SCHEMA = "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json"
+AGENT_PLUGINS_KEYS = frozenset(
+    {"$schema", "name", "version", "description", "author", "homepage",
+     "repository", "license", "keywords", "extensions"}
+)
+AGENT_PLUGINS_NAME = re.compile(r"[a-z0-9](?:[a-z0-9.-]{0,62}[a-z0-9])?")
+
 #: Files whose presence at the root would start something with a session.
 FORBIDDEN_AT_ROOT = (".mcp.json", "mcp.json", "hooks", "hooks.json")
 
@@ -113,6 +123,19 @@ def load_json(path: Path) -> object:
         return None
 
 
+def check_agent_plugins(data: dict[str, object]) -> None:
+    if data.get("$schema") != AGENT_PLUGINS_SCHEMA:
+        problem(f"plugin.json: $schema must be {AGENT_PLUGINS_SCHEMA}")
+    for key in sorted(set(data) - AGENT_PLUGINS_KEYS):
+        problem(f"plugin.json: {key} is not an Agent Plugins 1.0 field")
+    name = data.get("name")
+    if not isinstance(name, str) or not AGENT_PLUGINS_NAME.fullmatch(name) or ".." in name or "--" in name:
+        problem(f"plugin.json: name {name!r} is not a valid Agent Plugins name")
+    extensions = data.get("extensions", {})
+    if not isinstance(extensions, dict) or not all(isinstance(v, dict) for v in extensions.values()):
+        problem("plugin.json: extensions must map namespaces to objects")
+
+
 def check_manifests() -> int:
     identities: dict[str, tuple[object, object]] = {}
     for rel, (name_key, version_key) in JSON_MANIFESTS.items():
@@ -123,6 +146,8 @@ def check_manifests() -> int:
         if not isinstance(data, dict):
             continue
         identities[rel] = (data.get(name_key), data.get(version_key))
+        if rel == "plugin.json":
+            check_agent_plugins(data)
         for key in ("hooks", "mcpServers"):
             if key in data:
                 problem(f"{rel}: declares {key}; the main plugin has neither")

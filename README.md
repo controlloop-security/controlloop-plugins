@@ -76,6 +76,17 @@ extensions from version 0.26; older versions get the short `GEMINI.md`
 summary and the command only. The extension declares no MCP server and no
 hooks, so nothing starts with a session.
 
+### Cursor
+
+The repository root is an [Agent Plugins](https://agent-plugins.org)
+plugin (`plugin.json`), which Cursor loads with its skills. Install it
+from the Cursor Marketplace once listed. On a Teams or Enterprise plan, an
+admin can import this repository under Dashboard → Plugins & MCPs → Add
+Marketplace. To try it locally, copy the repository to
+`~/.cursor/plugins/local/controlloop` and run **Developer: Reload Window**.
+Then ask the agent "what does this branch let my agents do?" The review
+covers Cursor's own `.cursor/mcp.json` and hooks.
+
 Plugins for the other hosts are added here as they are released.
 
 ## License

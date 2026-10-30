@@ -15,7 +15,12 @@ What it enforces:
   plugin's name and version;
 - the ground rules: no hooks anywhere, nothing that runs at session start,
   and no MCP server in the main plugin (hosts start a plugin's MCP servers
-  when a session opens; the server ships as the separate opt-in plugin).
+  when a session opens; the server ships as the separate opt-in plugin);
+- no download-and-run command (`curl ... | bash`) in any skill, command or
+  context file: the Claude directory flags it, and the skill never runs an
+  installer anyway;
+- every Claude Code plugin has a square `.claude-plugin/icon.png` of 512
+  to 2048 pixels, under 2 MB, which the directory requires.
 """
 
 from __future__ import annotations
@@ -57,6 +62,15 @@ FORBIDDEN_AT_ROOT = (".mcp.json", "mcp.json", "hooks", "hooks.json")
 FORBIDDEN_ANYWHERE = ("hooks.json",)
 
 LINK = re.compile(r"\]\(([^)#\s]+)(?:#[^)]*)?\)")
+
+#: A download piped into a shell.
+PIPE_TO_SHELL = re.compile(r"\b(?:curl|wget)\b[^\n|]*\|\s*(?:sudo\s+)?(?:ba|z|da)?sh\b")
+
+#: Claude Code plugins, each needing a directory icon.
+CLAUDE_PLUGINS = (Path("."), Path("plugins/controlloop-mcp"))
+ICON_PIXELS = range(512, 2049)
+ICON_MAX_BYTES = 2 * 1024 * 1024
+PNG_SIGNATURE = b"\x89PNG\r\n\x1a\n"
 
 problems: list[str] = []
 
@@ -197,12 +211,37 @@ def check_ground_rules() -> None:
             continue
         if "SessionStart" in path.read_text(encoding="utf-8", errors="replace"):
             problem(f"{path.relative_to(ROOT)}: mentions SessionStart")
+    for path in ROOT.rglob("*"):
+        if ".git" in path.parts or not path.is_file() or path.suffix not in (".md", ".toml"):
+            continue
+        if PIPE_TO_SHELL.search(path.read_text(encoding="utf-8", errors="replace")):
+            problem(f"{path.relative_to(ROOT)}: pipes a download into a shell")
+
+
+def check_icons() -> None:
+    for plugin in CLAUDE_PLUGINS:
+        icon = ROOT / plugin / ".claude-plugin" / "icon.png"
+        rel = icon.relative_to(ROOT)
+        if not icon.is_file():
+            problem(f"{rel}: missing; the Claude directory needs a square PNG icon")
+            continue
+        data = icon.read_bytes()
+        if not data.startswith(PNG_SIGNATURE) or data[12:16] != b"IHDR":
+            problem(f"{rel}: not a PNG")
+            continue
+        width = int.from_bytes(data[16:20], "big")
+        height = int.from_bytes(data[20:24], "big")
+        if width != height or width not in ICON_PIXELS:
+            problem(f"{rel}: {width}x{height}; needs a square of 512 to 2048 pixels")
+        if len(data) >= ICON_MAX_BYTES:
+            problem(f"{rel}: {len(data)} bytes; needs to be under 2 MB")
 
 
 def main() -> int:
     skills = check_skills()
     manifests = check_manifests()
     check_ground_rules()
+    check_icons()
     if problems:
         for message in problems:
             print(f"error: {message}", file=sys.stderr)

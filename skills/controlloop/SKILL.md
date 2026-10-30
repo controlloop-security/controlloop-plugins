@@ -51,8 +51,8 @@ Use the first that works:
    - Homebrew: `brew install controlloop-security/controlloop/controlloop`
    - uv: `uv tool install controlloop`
    - pipx: `pipx install controlloop`
-   - Shell installer (verifies checksums):
-     `curl -fsSL https://raw.githubusercontent.com/controlloop-security/controlloop/main/install.sh | bash`
+   - Other options, including a checksum-verified shell installer:
+     https://github.com/controlloop-security/controlloop/blob/main/docs/getting-started/installation.md
 
 This skill describes CLI 0.6. If `--version` reports something older,
 say that the output may differ from what is described here.

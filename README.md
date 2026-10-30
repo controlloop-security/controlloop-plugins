@@ -9,7 +9,19 @@ Cursor, Kiro and Copilot settings, MCP declarations, agent-running
 workflows, A2A cards, OpenAPI, AWS IAM, and CrewAI, LangGraph and OpenAI
 Agents SDK code) and reports the authority a change adds, with a
 deterministic verdict. These plugins run it locally and read its output.
-They do not edit your configuration and do not send anything anywhere.
+They do not edit your configuration.
+
+## Data
+
+The plugins themselves send nothing anywhere, and the CLI makes no network
+calls on its own. One exception is under your control: if a repository's
+`controlloop.toml` sets `team_enabled = true` (or the environment sets
+`CONTROLLOOP_TEAM_ENABLED=true`) and `CONTROLLOOP_TEAM_TOKEN` is set,
+`controlloop gate` sends a structured summary of the scan (commit, branch,
+verdict, findings and components; never source code, file contents or
+secrets) to ControlLoop Team. The skill checks for this and
+asks you before it runs such a gate. See the
+[privacy policy](https://controlloop.ai/privacy).
 
 ## The skill
 

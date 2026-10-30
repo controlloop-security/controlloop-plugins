@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "controlloop-mcp",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Opt-in: run the ControlLoop CLI's local, read-only MCP server (controlloop mcp) so the agent can call gate, diff, bom and rules as tools. No network, no file writes. Starts with each session while enabled.",
   "author": { "name": "ControlLoop", "url": "https://controlloop.ai" },
   "homepage": "https://github.com/controlloop-security/controlloop-plugins",

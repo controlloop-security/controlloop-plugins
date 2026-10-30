@@ -64,6 +64,18 @@ agents do?" or mention `$controlloop`. The review covers Codex's own
 `.codex/config.toml` (`approval_policy`, `sandbox_mode`, MCP servers) as
 well as every other host's files.
 
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/controlloop-security/controlloop-plugins
+```
+
+Then ask "what does this branch let my agents do?", or run
+`/controlloop:review`. Gemini CLI loads the `controlloop` skill from
+extensions from version 0.26; older versions get the short `GEMINI.md`
+summary and the command only. The extension declares no MCP server and no
+hooks, so nothing starts with a session.
+
 Plugins for the other hosts are added here as they are released.
 
 ## License

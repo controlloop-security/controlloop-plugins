@@ -9,6 +9,9 @@
   },
   "homepage": "https://github.com/controlloop-security/controlloop-plugins",
   "repository": "https://github.com/controlloop-security/controlloop-plugins",
+  "documentationUrl": "https://github.com/controlloop-security/controlloop-plugins#readme",
+  "supportUrl": "https://github.com/controlloop-security/controlloop-plugins/issues",
+  "privacyPolicyUrl": "https://controlloop.ai/privacy",
   "license": "Apache-2.0",
   "keywords": ["security", "agents", "mcp", "hooks", "permissions", "ci", "code-review"]
 }

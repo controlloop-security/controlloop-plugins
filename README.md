@@ -91,13 +91,19 @@ hooks, so nothing starts with a session.
 ### Cursor
 
 The repository root is an [Agent Plugins](https://agent-plugins.org)
-plugin (`plugin.json`), which Cursor loads with its skills. Install it
-from the Cursor Marketplace once listed. On a Teams or Enterprise plan, an
-admin can import this repository under Dashboard → Plugins & MCPs → Add
-Marketplace. To try it locally, copy the repository to
-`~/.cursor/plugins/local/controlloop` and run **Developer: Reload Window**.
-Then ask the agent "what does this branch let my agents do?" The review
-covers Cursor's own `.cursor/mcp.json` and hooks.
+plugin (`plugin.json`), which Cursor loads with its skills. Download the
+latest release into Cursor's local plugins folder:
+
+```bash
+mkdir -p ~/.cursor/plugins/local/controlloop && curl -fsSL https://github.com/controlloop-security/controlloop-plugins/releases/latest/download/controlloop-plugin.tar.gz | tar -xz -C ~/.cursor/plugins/local/controlloop
+```
+
+Then run **Developer: Reload Window** in Cursor and ask the agent "what
+does this branch let my agents do?" The review covers Cursor's own
+`.cursor/mcp.json` and hooks. Once ControlLoop is listed in the Cursor
+Marketplace you can install it from there instead. On a Teams or
+Enterprise plan, an admin can import this repository under Dashboard →
+Plugins & MCPs → Add Marketplace.
 
 ### GitHub Copilot (Copilot CLI and VS Code)
 

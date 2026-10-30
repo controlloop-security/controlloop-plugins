@@ -1,0 +1,23 @@
+name: Validate
+
+# Checks the skills and every host manifest, and that no plugin here ships
+# a hook or starts anything at session start. See scripts/validate.py.
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    name: Skills and manifests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7.0.1
+
+      - name: Validate
+        run: python3 scripts/validate.py

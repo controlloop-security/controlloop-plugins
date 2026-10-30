@@ -1,0 +1,11 @@
+{
+  "name": "controlloop-mcp",
+  "displayName": "ControlLoop MCP server",
+  "version": "0.1.0",
+  "description": "Opt-in: run the ControlLoop CLI's local, read-only MCP server (controlloop mcp) so the agent can call gate, diff, bom and rules as tools. No network, no file writes. Starts with each session while enabled.",
+  "author": { "name": "ControlLoop", "url": "https://controlloop.ai" },
+  "homepage": "https://github.com/controlloop-security/controlloop-plugins",
+  "repository": "https://github.com/controlloop-security/controlloop-plugins",
+  "license": "Apache-2.0",
+  "keywords": ["security", "agents", "mcp"]
+}

@@ -11,7 +11,101 @@ Agents SDK code) and reports the authority a change adds, with a
 deterministic verdict. These plugins run it locally and read its output.
 They do not edit your configuration and do not send anything anywhere.
 
-Plugins for each host are added here as they are released.
+## The skill
+
+[`skills/controlloop/SKILL.md`](skills/controlloop/SKILL.md) is one
+[Agent Skill](https://agentskills.io) shared by every host. It tells the
+agent to:
+
+1. find the CLI (`controlloop` on `PATH`, else `uvx controlloop` after
+   asking, else show the install options; it never installs anything);
+2. run `controlloop gate` against the default branch, writing the evidence
+   file to a temp directory rather than the repository;
+3. quote the verdict and each authority statement, explain the worst
+   reachable capability and each finding, and link the rule's
+   documentation;
+4. draft `controlloop.yaml` approvals, tool declarations or ceilings only
+   when asked, and leave applying them to you.
+
+## Install
+
+Every plugin runs the `controlloop` CLI you already have, or `uvx controlloop`
+after asking you. Install the CLI with
+`brew install controlloop-security/controlloop/controlloop`,
+`uv tool install controlloop`, or `pipx install controlloop`.
+
+### Claude Code
+
+```text
+/plugin install controlloop --marketplace controlloop-security/controlloop-plugins
+```
+
+On Claude Code older than 2.1.275, add the marketplace first:
+
+```text
+/plugin marketplace add controlloop-security/controlloop-plugins
+/plugin install controlloop@controlloop
+```
+
+Then ask "what does this change let my agents do?", or run
+`/controlloop:review` (optionally with a directory and
+`--default-branch <name>`).
+
+### Codex
+
+```bash
+codex plugin marketplace add controlloop-security/controlloop-plugins
+codex plugin add controlloop@controlloop
+```
+
+Or run `/plugins` in Codex and pick ControlLoop from the `controlloop`
+marketplace. Start a new session, then ask "what does this branch let my
+agents do?" or mention `$controlloop`. The review covers Codex's own
+`.codex/config.toml` (`approval_policy`, `sandbox_mode`, MCP servers) as
+well as every other host's files.
+
+### Gemini CLI
+
+```bash
+gemini extensions install https://github.com/controlloop-security/controlloop-plugins
+```
+
+Then ask "what does this branch let my agents do?", or run
+`/controlloop:review`. Gemini CLI loads the `controlloop` skill from
+extensions from version 0.26; older versions get the short `GEMINI.md`
+summary and the command only. The extension declares no MCP server and no
+hooks, so nothing starts with a session.
+
+### Cursor
+
+The repository root is an [Agent Plugins](https://agent-plugins.org)
+plugin (`plugin.json`), which Cursor loads with its skills. Install it
+from the Cursor Marketplace once listed. On a Teams or Enterprise plan, an
+admin can import this repository under Dashboard → Plugins & MCPs → Add
+Marketplace. To try it locally, copy the repository to
+`~/.cursor/plugins/local/controlloop` and run **Developer: Reload Window**.
+Then ask the agent "what does this branch let my agents do?" The review
+covers Cursor's own `.cursor/mcp.json` and hooks.
+
+### GitHub Copilot (Copilot CLI and VS Code)
+
+```bash
+copilot plugin marketplace add controlloop-security/controlloop-plugins
+copilot plugin install controlloop@controlloop
+```
+
+Copilot CLI reads the same marketplace as Claude Code and the root
+`plugin.json`. In VS Code, run **Chat: Install Plugin from Source** and
+enter `controlloop-security/controlloop-plugins`. Then ask Copilot "what
+does this branch let my agents do?"
+
+## Any other MCP host
+
+`controlloop mcp` (in the CLI release after 0.6.2) serves the same review as read-only
+tools to Kiro, Windsurf, Roo Code, Cline, Continue, opencode and any other
+MCP host. See the CLI's
+[local MCP server](https://github.com/controlloop-security/controlloop/blob/main/docs/reference/mcp-server.md)
+page.
 
 ## License
 

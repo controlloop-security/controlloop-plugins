@@ -1,0 +1,22 @@
+{
+  "name": "controlloop",
+  "description": "ControlLoop plugins for Claude Code.",
+  "owner": {
+    "name": "ControlLoop",
+    "url": "https://controlloop.ai"
+  },
+  "plugins": [
+    {
+      "name": "controlloop",
+      "source": "./",
+      "description": "Review what a change lets your AI agents do, with the local ControlLoop CLI.",
+      "category": "security"
+    },
+    {
+      "name": "controlloop-mcp",
+      "source": "./plugins/controlloop-mcp",
+      "description": "Opt-in: the CLI's local, read-only MCP server (controlloop mcp) as agent tools.",
+      "category": "security"
+    }
+  ]
+}

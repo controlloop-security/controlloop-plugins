@@ -1,0 +1,14 @@
+description = "Review what this branch lets your AI agents do, with the local ControlLoop CLI"
+prompt = """
+Use the `controlloop` skill to review the agent-authority impact of this branch.
+
+- What to analyse: {{args}} if given (a directory, optionally followed by
+  `--default-branch <name>`); otherwise the repository root.
+- Run `controlloop gate` against the default branch exactly as the skill
+  describes, with `--evidence-path` under the system temp directory.
+- Answer in the skill's order: the verdict, each authority statement quoted
+  exactly, the worst reachable capability, each finding with its rule id,
+  severity, file and documentation link, then the next steps.
+- Do not edit any file. If an approval or another `controlloop.yaml` change
+  would help, offer to draft it.
+"""

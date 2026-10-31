@@ -1,0 +1,38 @@
+name: Release
+
+# Attaches the plugin as controlloop-plugin.tar.gz to every published
+# release, so a stable URL always serves the newest one:
+#   https://github.com/controlloop-security/controlloop-plugins/releases/latest/download/controlloop-plugin.tar.gz
+# The archive's root is the plugin root (plugin.json, skills/, ...), so it
+# unpacks straight into a host's plugin folder, such as Cursor's
+# ~/.cursor/plugins/local/controlloop. CI files are left out.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: write
+
+jobs:
+  attach:
+    name: Attach the plugin archive
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out
+        uses: actions/checkout@v7.0.1
+
+      - name: Build the archive
+        env:
+          TAG: ${{ github.event.release.tag_name }}
+        run: |
+          git fetch --depth=1 origin "refs/tags/$TAG:refs/tags/$TAG"
+          git archive --format=tar.gz -o controlloop-plugin.tar.gz "$TAG" -- . ':(exclude).github'
+          tar -tzf controlloop-plugin.tar.gz | grep -qx 'plugin.json'
+          tar -tzf controlloop-plugin.tar.gz | grep -qx 'skills/controlloop/SKILL.md'
+
+      - name: Attach it to the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "$TAG" controlloop-plugin.tar.gz --clobber --repo "$GITHUB_REPOSITORY"

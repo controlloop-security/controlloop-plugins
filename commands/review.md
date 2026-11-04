@@ -1,5 +1,5 @@
 ---
-description: Review what this branch lets your AI agents do, with the local ControlLoop CLI
+description: Review what this branch lets your AI agents do and installs on clone, open and commit, with the local ControlLoop CLI
 argument-hint: "[path] [--default-branch <name>]"
 ---
 

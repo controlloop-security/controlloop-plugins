@@ -9,7 +9,7 @@
     {
       "name": "controlloop",
       "source": "./",
-      "description": "Review what a change lets your AI agents do, with the local ControlLoop CLI.",
+      "description": "Review what a change lets your AI agents do, and what it installs on clone, open and commit, with the local ControlLoop CLI.",
       "category": "security"
     },
     {

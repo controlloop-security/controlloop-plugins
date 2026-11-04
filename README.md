@@ -7,8 +7,11 @@ explain its answer to "what does this change let my agents do?"
 ControlLoop reads agent configuration (Claude Code, Codex, Gemini CLI,
 Cursor, Kiro and Copilot settings, MCP declarations, agent-running
 workflows, A2A cards, OpenAPI, AWS IAM, and CrewAI, LangGraph and OpenAI
-Agents SDK code) and reports the authority a change adds, with a
-deterministic verdict. These plugins run it locally and read its output.
+Agents SDK code) and the files that install tools on clone, open and
+commit (dev container extensions, features and lifecycle commands, VS Code
+extension recommendations, pre-commit hook repositories and local hooks,
+editor startup files, JetBrains required plugins), and reports the
+authority a change adds, with a deterministic verdict. These plugins run it locally and read its output.
 They do not edit your configuration.
 
 ## Data

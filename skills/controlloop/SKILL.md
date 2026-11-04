@@ -1,8 +1,8 @@
 ---
 name: controlloop
-description: Review what a change lets AI agents do, using the local ControlLoop CLI. Use when the user asks what a branch, pull request or diff lets their agents do, whether an agent-configuration change is safe to merge, or to explain a ControlLoop finding or verdict. Covers Claude Code, Codex, Gemini CLI, Cursor, Kiro and Copilot settings, hooks, permission rules, MCP servers, plugins and marketplaces, agent-running GitHub workflows, A2A cards, OpenAPI, AWS IAM, and CrewAI, LangGraph and OpenAI Agents SDK code. Runs `controlloop gate` against the default branch and explains the verdict, the authority each change grants, and each finding with its documentation link. Read-only and local; drafts controlloop.yaml changes only when asked.
+description: Review what a change lets AI agents do, and what it installs and runs on clone, open and commit, using the local ControlLoop CLI. Use when the user asks what a branch, pull request or diff lets their agents do, whether an agent-configuration, dev container or pre-commit change is safe, or to explain a ControlLoop finding or verdict. Covers agent configuration (Claude Code, Codex, Gemini CLI, Cursor, Kiro and Copilot settings, hooks, permission rules, MCP servers, plugins and marketplaces, agent-running GitHub workflows, A2A cards, OpenAPI, AWS IAM, and CrewAI, LangGraph and OpenAI Agents SDK code) and the files that install tools on clone, open and commit (dev container extensions, features and lifecycle commands, pre-commit hooks, editor startup files, JetBrains required plugins). Runs `controlloop gate` against the default branch and explains the verdict, the authority each change grants, and each finding with its documentation link. Read-only and local; drafts controlloop.yaml changes only when asked.
 license: Apache-2.0
-compatibility: Needs git and the ControlLoop CLI 0.6 or later (`controlloop` on PATH, or uv to run it with `uvx`).
+compatibility: Needs git and the ControlLoop CLI 0.6 or later (`controlloop` on PATH, or uv to run it with `uvx`); 0.7.1 or later reads dev containers, pre-commit configs and editor startup files.
 metadata:
   homepage: https://github.com/controlloop-security/controlloop-plugins
 ---
@@ -10,9 +10,12 @@ metadata:
 # ControlLoop: what does this change let my agents do?
 
 ControlLoop is an open-source CLI that reads a repository's agent
-configuration and code, builds a capability graph, compares it with the
-default branch, and returns a deterministic verdict. It never runs the
-code or starts the servers it reads. Your job is to run it, read its
+configuration and code, and the files that install tools and run
+commands when the repository is cloned, opened or committed to (dev
+containers, pre-commit hooks, editor startup files). It builds a
+capability graph, compares it with the default branch, and returns a
+deterministic verdict. It never runs the code, starts the servers, or
+installs the extensions and hooks it reads. Your job is to run it, read its
 answer accurately, and explain that answer in plain language. You do not
 replace its analysis with your own judgment.
 
